@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 class Book
@@ -15,14 +16,26 @@ class Book
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
+    
     #[ORM\Column(length: 13)]
+    #[Assert\NotBlank(message: "L'ISBN est obligatoire.")]
+    #[Assert\Length(
+        exactMessage: "L'ISBN doit comporter exactement 13 caractères.",
+        min: 13,
+        max: 13
+    )]
     private ?string $isbn = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: "Le titre est obligatoire.")]
+    #[Assert\Length(
+        max: 50,
+        maxMessage: "Le titre ne peut pas dépasser {{ limit }} caractères."
+    )]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: "Le résumé est obligatoire.")]
     private ?string $summary = null;
 
     #[ORM\Column]
