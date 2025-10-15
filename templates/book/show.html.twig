@@ -1,50 +1,16 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Book{% endblock %}
-
+{% block title %}Détails du livre{% endblock %}
 {% block body %}
-    <h1>Book</h1>
+<h1>Détails du livre</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ book.id }}</td>
-            </tr>
-            <tr>
-                <th>Isbn</th>
-                <td>{{ book.isbn }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ book.title }}</td>
-            </tr>
-            <tr>
-                <th>Summary</th>
-                <td>{{ book.summary }}</td>
-            </tr>
-            <tr>
-                <th>PublicationYear</th>
-                <td>{{ book.publicationYear }}</td>
-            </tr>
-            <tr>
-                <th>IssueDate</th>
-                <td>{{ book.issueDate ? book.issueDate|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ book.createdAt ? book.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ book.updatedAt ? book.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+<ul>
+  <li><strong>ID :</strong> {{ book.id }}</li>
+  <li><strong>Titre :</strong> {{ book.title }}</li>
+  <li><strong>ISBN :</strong> {{ book.isbn }}</li>
+</ul>
 
-    <a href="{{ path('app_book_index') }}">back to list</a>
+<a href="{{ path('app_book_index') }}">Retour à la liste</a>
+<a href="{{ path('app_book_edit', {'id': book.id}) }}">Modifier</a>
 
-    <a href="{{ path('app_book_edit', {'id': book.id}) }}">edit</a>
-
-    {{ include('book/_delete_form.html.twig') }}
+{{ include('book/_delete_form.html.twig') }}
 {% endblock %}

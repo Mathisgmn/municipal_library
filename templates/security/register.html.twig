@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+<div style="max-width:480px;margin:40px auto;padding:20px;border:1px solid #ddd;border-radius:6px;">
+  <h2>Inscription</h2>
+
+  {{ form_start(registrationForm) }}
+    <div style="margin-bottom:8px;">
+      {{ form_label(registrationForm.email) }}<br>
+      {{ form_widget(registrationForm.email, {'attr': {'style':'width:100%;padding:6px;'}}) }}
+      <div style="color:#b00020">{{ form_errors(registrationForm.email) }}</div>
+    </div>
+
+    <div style="margin-bottom:8px;">
+      {{ form_label(registrationForm.firstName) }}<br>
+      {{ form_widget(registrationForm.firstName, {'attr': {'style':'width:100%;padding:6px;'}}) }}
+      <div style="color:#b00020">{{ form_errors(registrationForm.firstName) }}</div>
+    </div>
+
+    <div style="margin-bottom:8px;">
+      {{ form_label(registrationForm.lastName) }}<br>
+      {{ form_widget(registrationForm.lastName, {'attr': {'style':'width:100%;padding:6px;'}}) }}
+      <div style="color:#b00020">{{ form_errors(registrationForm.lastName) }}</div>
+    </div>
+
+    <div style="margin-bottom:12px;">
+      {{ form_label(registrationForm.plainPassword) }}<br>
+      {{ form_widget(registrationForm.plainPassword, {'attr': {'style':'width:100%;padding:6px;'}}) }}
+      <div style="color:#b00020">{{ form_errors(registrationForm.plainPassword) }}</div>
+    </div>
+
+    <div>
+      <button type="submit" style="padding:8px 12px;">S'inscrire</button>
+      <a href="{{ path('app_login') }}" style="margin-left:10px;">Retour</a>
+    </div>
+  {{ form_end(registrationForm) }}
+</div>
+{% endblock %}

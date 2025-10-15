@@ -16,29 +16,23 @@ class Book
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-    
+
     #[ORM\Column(length: 13)]
-    #[Assert\NotBlank(message: "L'ISBN est obligatoire.")]
-    #[Assert\Length(
-        exactMessage: "L'ISBN doit comporter exactement 13 caractères.",
-        min: 13,
-        max: 13
-    )]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 10, max: 13)]
     private ?string $isbn = null;
 
     #[ORM\Column(length: 50)]
-    #[Assert\NotBlank(message: "Le titre est obligatoire.")]
-    #[Assert\Length(
-        max: 50,
-        maxMessage: "Le titre ne peut pas dépasser {{ limit }} caractères."
-    )]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 2, max: 50)]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank(message: "Le résumé est obligatoire.")]
+    #[Assert\NotBlank]
     private ?string $summary = null;
 
     #[ORM\Column]
+    #[Assert\NotNull]
     private ?int $publicationYear = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
@@ -68,169 +62,42 @@ class Book
         $this->authors = new ArrayCollection();
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+    public function getId(): ?int { return $this->id; }
 
-    public function getIsbn(): ?string
-    {
-        return $this->isbn;
-    }
+    public function getIsbn(): ?string { return $this->isbn; }
+    public function setIsbn(string $isbn): static { $this->isbn = $isbn; return $this; }
 
-    public function setIsbn(string $isbn): static
-    {
-        $this->isbn = $isbn;
+    public function getTitle(): ?string { return $this->title; }
+    public function setTitle(string $title): static { $this->title = $title; return $this; }
 
-        return $this;
-    }
+    public function getSummary(): ?string { return $this->summary; }
+    public function setSummary(string $summary): static { $this->summary = $summary; return $this; }
 
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
+    public function getPublicationYear(): ?int { return $this->publicationYear; }
+    public function setPublicationYear(int $publicationYear): static { $this->publicationYear = $publicationYear; return $this; }
 
-    public function setTitle(string $title): static
-    {
-        $this->title = $title;
+    public function getIssueDate(): ?\DateTimeInterface { return $this->issueDate; }
+    public function setIssueDate(?\DateTimeInterface $issueDate): static { $this->issueDate = $issueDate; return $this; }
 
-        return $this;
-    }
+    public function getCreatedAt(): ?\DateTimeInterface { return $this->createdAt; }
+    public function setCreatedAt(\DateTimeInterface $createdAt): static { $this->createdAt = $createdAt; return $this; }
 
-    public function getSummary(): ?string
-    {
-        return $this->summary;
-    }
+    public function getUpdatedAt(): ?\DateTimeInterface { return $this->updatedAt; }
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): static { $this->updatedAt = $updatedAt; return $this; }
 
-    public function setSummary(string $summary): static
-    {
-        $this->summary = $summary;
+    public function getUser(): ?User { return $this->user; }
+    public function setUser(?User $user): static { $this->user = $user; return $this; }
 
-        return $this;
-    }
+    /** @return Collection<int, Genre> */
+    public function getGenres(): Collection { return $this->genres; }
+    public function addGenre(Genre $genre): static { if (!$this->genres->contains($genre)) { $this->genres->add($genre); } return $this; }
+    public function removeGenre(Genre $genre): static { $this->genres->removeElement($genre); return $this; }
 
-    public function getPublicationYear(): ?int
-    {
-        return $this->publicationYear;
-    }
+    /** @return Collection<int, Author> */
+    public function getAuthors(): Collection { return $this->authors; }
+    public function addAuthor(Author $author): static { if (!$this->authors->contains($author)) { $this->authors->add($author); } return $this; }
+    public function removeAuthor(Author $author): static { $this->authors->removeElement($author); return $this; }
 
-    public function setPublicationYear(int $publicationYear): static
-    {
-        $this->publicationYear = $publicationYear;
-
-        return $this;
-    }
-
-    public function getIssueDate(): ?\DateTimeInterface
-    {
-        return $this->issueDate;
-    }
-
-    public function setIssueDate(?\DateTimeInterface $issueDate): static
-    {
-        $this->issueDate = $issueDate;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeInterface $createdAt): static
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): static
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): static
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Genre>
-     */
-    public function getGenres(): Collection
-    {
-        return $this->genres;
-    }
-
-    public function addGenre(Genre $genre): static
-    {
-        if (!$this->genres->contains($genre)) {
-            $this->genres->add($genre);
-        }
-
-        return $this;
-    }
-
-    public function removeGenre(Genre $genre): static
-    {
-        $this->genres->removeElement($genre);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Author>
-     */
-    public function getAuthors(): Collection
-    {
-        return $this->authors;
-    }
-
-    public function addAuthor(Author $author): static
-    {
-        if (!$this->authors->contains($author)) {
-            $this->authors->add($author);
-        }
-
-        return $this;
-    }
-
-    public function removeAuthor(Author $author): static
-    {
-        $this->authors->removeElement($author);
-
-        return $this;
-    }
-
-    public function getCover(): ?Cover
-    {
-        return $this->cover;
-    }
-
-    public function setCover(Cover $cover): static
-    {
-        // set the owning side of the relation if necessary
-        if ($cover->getBook() !== $this) {
-            $cover->setBook($this);
-        }
-
-        $this->cover = $cover;
-
-        return $this;
-    }
+    public function getCover(): ?Cover { return $this->cover; }
+    public function setCover(Cover $cover): static { if ($cover->getBook() !== $this) { $cover->setBook($this); } $this->cover = $cover; return $this; }
 }

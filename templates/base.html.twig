@@ -1,20 +1,55 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
-        {% block stylesheets %}
-        {% endblock %}
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Bibliothèque{% endblock %}</title>
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self';
+                   img-src 'self';
+                   style-src 'self' 'unsafe-inline' https://unpkg.com;
+                   font-src 'self';
+                   script-src 'self' 'unsafe-inline' https://trusted.cdn.com;
+                   connect-src 'self';
+                   object-src 'none';">
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+    {% block stylesheets %}{% endblock %}
+  </head>
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body>
-        <div class="container">
-            {% block body %}{% endblock %}
-        </div>
-    </body>
+  <body>
+    <header class="container">
+      <nav>
+        <ul>
+          <li><strong>📚 Bibliothèque</strong></li>
+        </ul>
+        <ul>
+          <li><a href="{{ path('app_login') }}">Connexion</a></li>
+          <li><a href="{{ path('app_register') }}">Inscription</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="container">
+      {% block body %}{% endblock %}
+    </main>
+
+    <footer class="container">
+      <hr>
+      <small>Projet Symfony - Sécurisation © EFREI</small><br>
+      <button id="mode-dark" class="contrast">Mode sombre</button>
+      <button id="mode-light" class="secondary">Mode clair</button>
+    </footer>
+
+    <script>
+      document.getElementById('mode-dark').addEventListener('click', function() {
+        document.cookie = "myapp_dark_mode=true; path=/";
+      });
+
+      document.getElementById('mode-light').addEventListener('click', function() {
+        document.cookie = "myapp_dark_mode=false; path=/";
+      });
+    </script>
+
+    {% block javascripts %}{% endblock %}
+  </body>
 </html>
