@@ -17,7 +17,7 @@
 - Le champ CSRF est activé dans `security.yaml` avec `enable_csrf: true` pour le formulaire de connexion.
 - Les formulaires CRUD utilisent la méthode Symfony `$this->isCsrfTokenValid()` pour vérifier la validité du token.
 ![token csrf](images/csrf.png)
-![token csrf invalide](image/csrfinvalide.png)
+![token csrf invalide](images/csrfinvalide.png)
 
 ## Vulnérabilités des dépendances
 - Les dépendances ont été vérifiées avec la commande :composer audit
